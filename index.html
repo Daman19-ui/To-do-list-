@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="stats">
+      <div class="details">
+        <h1>Todo App</h1>
+        <p>Keep it Up!</p>
+        <div id="progressbar">
+          <div id="progress"></div>
+        </div>
+        <div class="stats-num">
+          <p id="num2">0/0</p> <!-- Dynamic stats will go here -->
+        </div>
+      </div>
+    </div>
+
+    <form>
+      <input id="taskInput" type="text" placeholder="Write your task" />
+      <button id="newTask" type="submit">+</button>
+    </form>
+
+    <!-- ✅ FIXED: Added the correct ID here -->
+    <ul id="task-list" class="task-list"></ul>
+  </div>
+
+  <script>
+  let tasks = [];
+
+  // Load tasks from localStorage on DOM load
+  document.addEventListener("DOMContentLoaded", () => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks) {
+      tasks = storedTasks;
+      updateTaskList();
+    }
+  });
+
+  const saveTasks = () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  };
+
+  const addTask = () => {
+    const taskInput = document.getElementById('taskInput');
+    const text = taskInput.value.trim();
+
+    if (text) {
+      tasks.push({ text: text, completed: false });
+      updateTaskList();
+      taskInput.value = '';
+      saveTasks();
+    }
+  };
+
+  const toggleTaskComplete = (index) => {
+    tasks[index].completed = !tasks[index].completed;
+    updateTaskList();
+    saveTasks();
+  };
+
+  const editTask = (index) => {
+    const newText = prompt("Edit task:", tasks[index].text);
+    if (newText !== null && newText.trim() !== '') {
+      tasks[index].text = newText.trim();
+      updateTaskList();
+      saveTasks();
+    }
+  };
+
+  const deleteTask = (index) => {
+    tasks.splice(index, 1);
+    updateTaskList();
+    saveTasks();
+  };
+
+  const updateTaskList = () => {
+    const taskList = document.getElementById('task-list');
+    taskList.innerHTML = '';
+
+    tasks.forEach((task, index) => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `
+        <div class="taskItem"> 
+          <div class="task ${task.completed ? 'completed' : ''}">
+            <input type="checkbox" class="checkbox" ${task.completed ? 'checked' : ''} />
+            <p>${task.text}</p>
+          </div>
+          <div class="icons">
+            <img src="./images/todo1.png" onClick="editTask(${index})"/>
+            <img src="./images/todo2.png" onClick="deleteTask(${index})"/>
+          </div>
+        </div>
+      `;
+
+      listItem.querySelector('.checkbox').addEventListener('change', () => toggleTaskComplete(index));
+      taskList.appendChild(listItem);
+    });
+
+    updateStats();
+  };
+
+  const updateStats = () => {
+    const total = tasks.length;
+    const completed = tasks.filter(task => task.completed).length;
+    document.getElementById('num2').innerText = `${completed}/${total}`;
+
+    const progress = document.getElementById('progress');
+    const percent = total === 0 ? 0 : (completed / total) * 100;
+    progress.style.width = `${percent}%`;
+
+    // 🎉 Trigger confetti when all tasks are complete
+    if (total > 0 && completed === total) {
+      blastConfetti();
+    }
+  };
+
+  document.getElementById('newTask').addEventListener('click', function (e) {
+    e.preventDefault();
+    addTask();
+  });
+
+  // ✅ Corrected function name: blastConfetti
+  const blastConfetti = () => {
+    const count = 200;
+    const defaults = {
+      origin: { y: 0.7 },
+    };
+
+    function fire(particleRatio, opts) {
+      confetti(Object.assign({}, defaults, opts, {
+        particleCount: Math.floor(count * particleRatio),
+      }));
+    }
+
+    fire(0.25, {
+      spread: 26,
+      startVelocity: 55,
+    });
+
+    fire(0.2, {
+      spread: 60,
+    });
+
+    fire(0.35, {
+      spread: 100,
+      decay: 0.91,
+      scalar: 0.8,
+    });
+
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 25,
+      decay: 0.92,
+      scalar: 1.2,
+    });
+
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 45,
+    });
+  };
+</script>
+
+<!-- ✅ Add this at the end of body -->
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+
+</body>
+</html>
