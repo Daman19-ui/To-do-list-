@@ -134,3 +134,101 @@ list-style: none;
     margin:0 10px;
     cursor: pointer;
 }
+.modal-content {
+    background: #1e1e40;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+    text-align: center;
+    width: 280px;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    position: relative;
+    animation: popin 0.3s ease;
+  }
+  
+  .modal-content h3 {
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .modal-content input {
+    padding: 0.5rem;
+    width: 90%;
+    background: #292960;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .modal-buttons {
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .save-btn, .cancel-btn {
+    padding: 0.3rem 0.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  
+  .save-btn {
+    background-color: #93a3cd;
+    color: white;
+  }
+  
+  .save-btn:hover {
+    background-color: #93a3cd;
+    transform: scale(1.05);
+  }
+  
+  .cancel-btn {
+    background-color: #93a3cd;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #93a3cd;
+    transform: scale(1.05);
+  }
+  
+  /* Modal background */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  /* Hide modal when needed */
+  .modal.hidden {
+    display: none;
+  }
+  
+  /* Animation */
+  @keyframes popin {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  
