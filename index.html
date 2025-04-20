@@ -26,7 +26,7 @@
       <button id="newTask" type="submit">+</button>
     </form>
 
-    <!-- ✅ FIXED: Added the correct ID here -->
+    <!--  FIXED: Added the correct ID here -->
     <ul id="task-list" class="task-list"></ul>
   </div>
   <!-- Edit Task Modal -->
@@ -75,7 +75,7 @@
     saveTasks();
   };
 
- // 👇 Reference to modal and inputs
+ //  Reference to modal and inputs
 const editModal = document.getElementById("editModal");
 const editInput = document.getElementById("editInput");
 const saveEdit = document.getElementById("saveEdit");
@@ -83,14 +83,14 @@ const cancelEdit = document.getElementById("cancelEdit");
 
 let currentEditIndex = null; // keep track of which task is being edited
 
-// 👇 Custom version of editTask()
+//  Custom version of editTask()
 const editTask = (index) => {
   currentEditIndex = index;
   editInput.value = tasks[index].text;
   editModal.classList.remove("hidden"); // show modal
 };
 
-// 👇 When "Save" button is clicked in modal
+//  When "Save" button is clicked in modal
 saveEdit.addEventListener("click", () => {
   const newText = editInput.value.trim();
   if (newText !== "") {
@@ -102,7 +102,7 @@ saveEdit.addEventListener("click", () => {
   currentEditIndex = null;
 });
 
-// 👇 When "Cancel" button is clicked in modal
+//  When "Cancel" button is clicked in modal
 cancelEdit.addEventListener("click", () => {
   editModal.classList.add("hidden");
   currentEditIndex = null;
@@ -162,7 +162,7 @@ cancelEdit.addEventListener("click", () => {
     addTask();
   });
 
-  // ✅ Corrected function name: blastConfetti
+  //  Corrected function name: blastConfetti
   const blastConfetti = () => {
     const count = 200;
     const defaults = {
@@ -204,7 +204,7 @@ cancelEdit.addEventListener("click", () => {
   };
 </script>
 
-<!-- ✅ Add this at the end of body -->
+<!-- Add this at the end of body -->
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 
 </body>
